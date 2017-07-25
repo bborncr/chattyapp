@@ -5,15 +5,20 @@ class MessageList extends Component {
     render() {
         console.log("Rendering <MessageList/>");
         return (
-            <div>
-                <main className="messages">
-                    <Message />
-                </main>
+            <div id="message-list">
                 <div className="message system">
-                    Anonymous1 changed their name to nomnom.
                 </div>
+                {
+                    this.props.messages.map((message) => {
+                        return (
+                            <Message key={message.id} message={message} />
+                        )
+                    })
+                }
             </div>
         );
     }
 }
 export default MessageList;
+
+
