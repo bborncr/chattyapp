@@ -12,7 +12,6 @@ class ChatBar extends Component {
     }
 
     onUserChange(event) {
-        console.log(event.target.value);
         const newCurrentUser = event.target.value;
         const setCurrentUser = {
             currentUser: newCurrentUser

@@ -28,14 +28,12 @@ class App extends Component {
 
   // Functions can be sent down the props river too!
   sendNewMessage(messageToSend) {
-    console.log("Message to send:", messageToSend);
     const id = Math.round(Math.random() * 1000000000);
     const newMessage = {
       id: id,
       username: messageToSend.currentUser,
       content: messageToSend.content
     };
-    // Dies here!!
     const messages = this.state.messages.concat(newMessage);
     this.setState({ messages: messages });
   }
