@@ -1,34 +1,26 @@
 import React, { Component } from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+import uuidv1 from 'uuid/v1';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: "1",
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: "2",
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      messages: []
     };
 
     // Gives context to so we can access this.setState in the function
     this.sendNewMessage = this.sendNewMessage.bind(this);
+    this.receiveNewMessage = this.receiveNewMessage.bind(this);
 
   }
 
   // Functions can be sent down the props river too!
   sendNewMessage(messageToSend) {
-    const id = Math.round(Math.random() * 1000000000);
+    // Generate UUID
+    const id = uuidv1();
     const newMessage = {
       id: id,
       username: messageToSend.currentUser,
@@ -39,11 +31,20 @@ class App extends Component {
     this.socket.send(JSON.stringify(newMessage));
   }
 
+  receiveNewMessage(incomingData){
+    const newMessage = incomingData;
+    const messages = this.state.messages.concat(newMessage);
+    this.setState({ messages: messages });
+  }
+
   // Fires when the App component is finished setting up
   componentDidMount() {
+    //Creates new socket and connects to chattyserver
     this.socket = new WebSocket("ws://localhost:3001");
-    this.socket.onmessage = function (event) {
-      console.log(event.data);
+    this.socket.onmessage = (event) => {
+      console.log("Incoming message:",event.data);
+      const data = JSON.parse(event.data);
+      this.receiveNewMessage(data);
     }
   }
 

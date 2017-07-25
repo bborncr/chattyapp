@@ -43,3 +43,19 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+   Example message:
+   ```javascript
+        [
+        {
+          id: "1",
+          username: "Bob",
+          content: "Has anyone seen my marbles?",
+        },
+        {
+          id: "2",
+          username: "Anonymous",
+          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
+        }
+        ]
+        ```
