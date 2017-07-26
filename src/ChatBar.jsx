@@ -11,18 +11,21 @@ class ChatBar extends Component {
 
     }
 
+    // When the user changes nickname update the state of the currentUser and sends notification
     onUserChange(event) {
         const newCurrentUser = event.target.value;
         const setCurrentUser = {
             currentUser: newCurrentUser
         }
         this.setState(setCurrentUser);
+        this.props.sendNewNicknameNotification(newCurrentUser);
     }
 
     onSubmit(event) {
         // When the Enter key is pressed update the content and clear the input field
         if (event.key === 'Enter') {
             const message = {
+                type: "incomingMessage",
                 currentUser: this.state.currentUser,
                 content: event.target.value
             }

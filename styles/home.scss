@@ -43,9 +43,16 @@
       padding: 5px;
     }
 
-    .message.system {
+    .message.system.show {
       font-style: italic;
       padding: 5px 20px;
+      display: block;
+    }
+
+    .message.system.hidden {
+      font-style: italic;
+      padding: 5px 20px;
+      display: none;
     }
 
     .message-content,
@@ -55,13 +62,26 @@
       padding: 0 10px;
     }
 
-    .message-content {
+    .message-content.show {
       flex: 8;
+      display: block;
     }
 
-    .message-username {
+    .message-username.show {
       flex: 2;
       font-weight: 700;
+      display: block;
+    }
+
+    .message-content.hidden {
+      flex: 8;
+      display: none;
+    }
+
+    .message-username.hidden {
+      flex: 2;
+      font-weight: 700;
+      display: none;
     }
 
     .navbar {
