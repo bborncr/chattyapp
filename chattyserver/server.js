@@ -24,6 +24,19 @@ wss.on('connection', function connection(ws) {
 
   // wss.clients is a Set not an Array, use .size to find the number of clients connected
   console.log("Clients connected:", wss.clients.size);
+  // Broadcast the online users info
+  let counter = {
+    counter: wss.clients.size,
+    type: "usersOnline"
+  }
+  counter.id = uuidv1();
+  counter = JSON.stringify(counter);
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(counter);
+    }
+  });
+
 
   ws.on('message', function incoming(data) {
     console.log("Incoming data", data);

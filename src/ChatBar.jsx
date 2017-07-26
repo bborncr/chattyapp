@@ -4,6 +4,11 @@ class ChatBar extends Component {
     // Always put props in here
     constructor(props) {
         super(props);
+        
+        // Set initial state
+        this.state = {
+            currentUser: "Anonymous"
+        }
 
         // Gives context to this.onSubmit so we can access this.setState in the onSubmit function
         this.onUserChange = this.onUserChange.bind(this);

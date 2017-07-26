@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+import NavBar from './NavBar.jsx';
 import uuidv1 from 'uuid/v1';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      counter: "0",
       currentUser: { name: "Anonymous" },
       messages: []
 
@@ -19,7 +21,6 @@ class App extends Component {
 
   }
 
-  // 
   sendNewNicknameNotification(newUser) {
     // Generate UUID
     const id = uuidv1();
@@ -65,6 +66,9 @@ class App extends Component {
         this.setState({ messages: nmessages });
         console.log("Received notificaton");
         break;
+      case "usersOnline":
+        this.setState({ counter: data.counter });
+        break;
       default:
         // show an error in the console if the message type is unknown
         throw new Error("Unknown event type " + data.type);
@@ -93,6 +97,7 @@ class App extends Component {
     console.log("Rendering <App/>");
     return (
       <div>
+        <NavBar counter={this.state.counter} />
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser} sendNewMessage={this.sendNewMessage} sendNewNicknameNotification={this.sendNewNicknameNotification} />
       </div>
