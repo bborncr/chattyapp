@@ -11,7 +11,6 @@ class App extends Component {
       counter: "0",
       currentUser: { name: "Anonymous" },
       messages: []
-
     };
 
     // Gives context to so we can access this.setState in the function
@@ -21,6 +20,7 @@ class App extends Component {
 
   }
 
+  // Called by ChatBar 
   sendNewNicknameNotification(newUser) {
     // Generate UUID
     const id = uuidv1();
@@ -30,8 +30,10 @@ class App extends Component {
       username: newUser,
       content: `${this.state.currentUser.name} has changed their name to ${newUser}.`
     };
+    // Update the current user state
     const updateCurrentUser = { name: newUser };
     this.setState({ currentUser: updateCurrentUser });
+    // Update the messages state and transmit
     const messages = this.state.messages.concat(newMessage);
     this.setState({ messages: messages });
     this.socket.send(JSON.stringify(newMessage));
@@ -48,12 +50,15 @@ class App extends Component {
       username: messageToSend.currentUser,
       content: messageToSend.content
     };
+    // Update the messages state and transmit
     const messages = this.state.messages.concat(newMessage);
     this.setState({ messages: messages });
     this.socket.send(JSON.stringify(newMessage));
   }
 
-  // Handles different data types
+  // Handles the different data types for incoming messages
+  // "incomingMessage" and "incomingNotification" are sent to messages and handled down the line
+  // "usersOnline" goes down through counter
   receiveNewMessage(data) {
     switch (data.type) {
       case "incomingMessage":
@@ -61,7 +66,6 @@ class App extends Component {
         this.setState({ messages: smessages });
         break;
       case "incomingNotification":
-        // data.type = "postNotification";
         const nmessages = this.state.messages.concat(data);
         this.setState({ messages: nmessages });
         console.log("Received notificaton");

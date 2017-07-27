@@ -4,7 +4,7 @@ class ChatBar extends Component {
     // Always put props in here
     constructor(props) {
         super(props);
-        
+
         // Set initial state
         this.state = {
             currentUser: "Anonymous"
@@ -13,16 +13,17 @@ class ChatBar extends Component {
         // Gives context to this.onSubmit so we can access this.setState in the onSubmit function
         this.onUserChange = this.onUserChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
     }
 
-    // When the user changes nickname update the state of the currentUser and sends notification
+    // When the user changes nickname update the state of the currentUser and send notification
+    // Event is triggered by .chatbar-username losing focus (onBlur) 
     onUserChange(event) {
         const newCurrentUser = event.target.value;
         const setCurrentUser = {
             currentUser: newCurrentUser
         }
         this.setState(setCurrentUser);
+        // This Function is defined in App.jsx and can be accessed in this.props -- this is how we send data upstream
         this.props.sendNewNicknameNotification(newCurrentUser);
     }
 
@@ -40,7 +41,6 @@ class ChatBar extends Component {
             event.target.value = '';
             this.props.sendNewMessage(message);
         }
-
     }
 
     render() {

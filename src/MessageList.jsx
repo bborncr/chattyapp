@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Message from './Message.jsx';
 
+// Use .map to pull the individual messages and format them as <Message> tags
 class MessageList extends Component {
 
     render() {
