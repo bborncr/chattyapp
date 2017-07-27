@@ -26,4 +26,4 @@ node server.js
 Look in package.json you lazy bum!
 
 ## Screenshots
-![Screenshot](./build/Chatty.jpg)
+![Screenshot](./build/Chatty.png)
